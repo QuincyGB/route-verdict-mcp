@@ -29,6 +29,7 @@ import os
 from typing import Any
 
 from mcp.server.fastmcp import FastMCP
+from mcp.types import ToolAnnotations
 
 from .client import (
     DEFAULT_BASE_URL,
@@ -71,7 +72,22 @@ def run_check(
         }
 
 
-@mcp.tool()
+# Annotations (all four hints, set to match the handler's real
+# behaviour): the check only reads — it probes the target (never pays
+# or modifies it) — so readOnly holds and destructive does not. NOT
+# idempotent: RouteVerdict records each check to power the "diff
+# against the last check" output, so a repeat call creates a new
+# server-side record and can return a different result (each call also
+# settles its own $0.05 x402 charge). openWorld: the tool probes an
+# arbitrary caller-supplied external URL and external catalogs.
+@mcp.tool(
+    annotations=ToolAnnotations(
+        readOnlyHint=True,
+        destructiveHint=False,
+        idempotentHint=False,
+        openWorldHint=True,
+    )
+)
 def route_check(resource_url: str) -> dict[str, Any]:
     """Audit an x402 endpoint's trust and liveness before paying or relying on it.
 

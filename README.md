@@ -1,6 +1,8 @@
 <!-- mcp-name: io.github.QuincyGB/route-verdict-mcp -->
 # route-verdict-mcp
 
+[![M8ven Score](https://m8ven.ai/badge/mcp/quincygb/route-verdict-mcp)](https://m8ven.ai/mcp/quincygb/route-verdict-mcp?s=readme)
+
 > **Standalone home:** This server was split out of `QuincyGB/token-verdict-tools` so each MCP server has its own GitHub repository for directory ingestion and maintenance. The PyPI package name (`route-verdict-mcp`), version, and install command are unchanged.
 
 An [MCP](https://modelcontextprotocol.io) server (stdio transport) that
